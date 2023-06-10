@@ -73,7 +73,7 @@
     }
 
     function getRandomImage() {
-        const useUnsplashImage = Math.random() < 0.5; // Adjust the probability of using an Unsplash image (0.2 = 20% chance)
+        const useUnsplashImage = Math.random() < 0.8; // Adjust the probability of using an Unsplash image (0.2 = 20% chance)
 
         if (useUnsplashImage) {
             return fetchRandomPhoto();
