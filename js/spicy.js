@@ -42,27 +42,28 @@
         }
     }
 
-    function setBackgroundImage(elementId, imageUrl) {
-        const element = document.getElementById(elementId);
-        element.style.backgroundImage = `url('${imageUrl}')`;
-    }
+function setBackgroundImage(elementId, imageUrl) {
+    const element = document.getElementById(elementId);
+    element.style.backgroundImage = `url('${imageUrl}')`;
+}
 
 function getRandomImage() {
-    const useUnsplashImage = Math.random() < 0.5; // Adjust the probability of using an Unsplash image (0.5 = 50% chance)
+    const useUnsplashImage = Math.random() < 0.2; // Adjust the probability of using an Unsplash image (0.2 = 20% chance)
 
     if (useUnsplashImage) {
         return fetchRandomPhoto();
     } else {
-        const randomIndex = Math.floor(Math.random() * localImages.length);
-        return localImages[randomIndex];
+        return new Promise((resolve) => {
+            const randomIndex = Math.floor(Math.random() * localImages.length);
+            resolve(localImages[randomIndex]);
+        });
     }
 }
 
-(async function() {
+window.onload = async function() {
     const imageUrl = await getRandomImage();
     setBackgroundImage('backgroundElement', imageUrl);
-})();
-
+};
     /* ----------------------------------------------------------------------
             END Display unsplash background 
     ---------------------------------------------------------------------- */
