@@ -34,7 +34,26 @@ a {
     color: #fff;
 }
 
+
 #backgroundElement {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.fullscreen {
     position: absolute;
     top: 0;
     left: 0;
@@ -43,15 +62,65 @@ a {
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
+    justify-content: center;
     overflow: auto;
+}
+
+
+
+.container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    color: #fff;
+    max-height: 100vh;
+    padding: 48px 0;
+
+}
+
+section {
+    max-width: 100%;
+    width: 730px;
+    text-align: center;
+    padding: 0;
+    margin: 0 0 10px 0;
+}
+
+
+.linksContainer {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.linksContainer a {
+    border: 1px #fff solid;
+    border-radius: 22px;
+    background: #fff3;
+    font-size: 1.35rem;
+    font-family: "Raleway",Helvetica, Arial, sans-serif;
+    text-decoration: none;
+    min-width: 180px;
+    display: inline-block;
+    padding: 0.5rem 0.6rem;
+    margin: 0.6rem 0.5rem;
+    text-align: center;
 }
 
 .tabs {
     display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-bottom: 30px;
+    gap: 20px;
+     max-width: 50vw;
+    min-width: fit-content;
+    text-shadow: rgba(0, 0, 0, 0.25) 0px 0px 7px;
+    margin-bottom: 35px;
 }
+
+
 
 .tab {
     background-color: #007bff;
@@ -71,13 +140,7 @@ a {
     background-color: #0056b3;
 }
 
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-    margin: 50px;
-}
+
 
 .card {
     width: 200px;
@@ -99,11 +162,13 @@ a {
 
 .card-content {
     padding: 16px;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .card-title {
     font-weight: bold;
     margin-bottom: 8px;
+    color: #fff;
 }
 
 .card-description {
@@ -115,17 +180,10 @@ a {
     display: none;
 }
 
-#backgroundElement {
-    width: 100vw;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
 
 #photoDetails {
     border-radius: 5px 10px;
-    padding: 5px;
+    padding: 5px 10px;
     position: absolute;
     bottom: 5px;
     left: 5px;

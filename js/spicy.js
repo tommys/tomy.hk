@@ -43,7 +43,7 @@ function init() {
             const userProfileUrl = data.user.links.html;
 
             const photoDetails = document.getElementById('photoDetails');
-            photoDetails.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+            photoDetails.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
 
 
             // Add "Photo by" text
