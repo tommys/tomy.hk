@@ -1,7 +1,6 @@
     /* ----------------------------------------------------------------------
         ***     Display unsplash background 
     ---------------------------------------------------------------------- */
-
     const accessKey = 'tktsbfDjptg6n6dFgVni02cAWpjkRizuMbN-pLCMZ34'; // Replace with your Unsplash API access key
     const collectionId = '8746741'; // Replace with the desired collection ID
 
@@ -28,42 +27,61 @@
             const photoUrl = `${data.urls.raw}&w=${width}&h=${height}`; // Append width and height to the raw image URL
             const name = data.user.name;
             const userProfileUrl = data.user.links.html;
+
+            const photoDetails = document.getElementById('photoDetails');
+            photoDetails.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+
+
+            // Add "Photo by" text
+            const photoByText = document.createTextNode('Photo by ');
+            photoDetails.appendChild(photoByText);
+
+            // Create and append the photoUsername element
+            const photoUsername = document.createElement('a');
+            photoUsername.textContent = name;
+            photoUsername.href = userProfileUrl;
+            photoUsername.target = '_blank';
+
+
+
+            photoDetails.appendChild(photoUsername);
+                    
             //const username = data.user.username;
             //const userProfileUrl = data.user.links.html;
 
             //document.getElementById('randomPhoto').src = photoUrl;
-            document.getElementById('photoUsername').textContent = name;
             //document.getElementById('photoUsername').textContent = username;
-            document.getElementById('photoUsername').href = userProfileUrl; // Set the href attribute of the <a> tag
+            // document.getElementById('photoUsername').textContent = name;
+            // document.getElementById('photoUsername').href = userProfileUrl; // Set the href attribute of the <a> tag
 
             return photoUrl;
+
         } catch (error) {
             console.error('Error fetching random photo:', error);
         }
     }
-
-function setBackgroundImage(elementId, imageUrl) {
-    const element = document.getElementById(elementId);
-    element.style.backgroundImage = `url('${imageUrl}')`;
-}
-
-function getRandomImage() {
-    const useUnsplashImage = Math.random() < 0.2; // Adjust the probability of using an Unsplash image (0.2 = 20% chance)
-
-    if (useUnsplashImage) {
-        return fetchRandomPhoto();
-    } else {
-        return new Promise((resolve) => {
-            const randomIndex = Math.floor(Math.random() * localImages.length);
-            resolve(localImages[randomIndex]);
-        });
+    function setBackgroundImage(elementId, imageUrl) {
+        const element = document.getElementById(elementId);
+        element.style.backgroundImage = `url('${imageUrl}')`;
     }
-}
 
-window.onload = async function() {
-    const imageUrl = await getRandomImage();
-    setBackgroundImage('backgroundElement', imageUrl);
-};
+    function getRandomImage() {
+        const useUnsplashImage = Math.random() < 0.5; // Adjust the probability of using an Unsplash image (0.2 = 20% chance)
+
+        if (useUnsplashImage) {
+            return fetchRandomPhoto();
+        } else {
+            return new Promise((resolve) => {
+                const randomIndex = Math.floor(Math.random() * localImages.length);
+                resolve(localImages[randomIndex]);
+            });
+        }
+    }
+
+    window.onload = async function() {
+        const imageUrl = await getRandomImage();
+        setBackgroundImage('backgroundElement', imageUrl);
+    };
     /* ----------------------------------------------------------------------
             END Display unsplash background 
     ---------------------------------------------------------------------- */
