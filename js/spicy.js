@@ -60,9 +60,16 @@
             console.error('Error fetching random photo:', error);
         }
     }
+
     function setBackgroundImage(elementId, imageUrl) {
         const element = document.getElementById(elementId);
-        element.style.backgroundImage = `url('${imageUrl}')`;
+
+        if (imageUrl) {
+            element.style.backgroundImage = `url('${imageUrl}')`;
+        } else {
+            // element.style.backgroundColor = '#000'; // Default background color
+            element.style.backgroundImage = "url('../img/image1.jpg')"; // Default background image
+        }
     }
 
     function getRandomImage() {
