@@ -5,6 +5,13 @@
     const accessKey = 'tktsbfDjptg6n6dFgVni02cAWpjkRizuMbN-pLCMZ34'; // Replace with your Unsplash API access key
     const collectionId = '8746741'; // Replace with the desired collection ID
 
+    const localImages = [
+    '../img/image1.jpg',
+    '../img/image2.jpg',
+    '../img/image3.jpg'
+    // ... add more image paths
+];
+
     async function fetchRandomPhoto() {
         const url = `https://api.unsplash.com/photos/random?collections=${collectionId}&client_id=${accessKey}`;
 
@@ -40,10 +47,21 @@
         element.style.backgroundImage = `url('${imageUrl}')`;
     }
 
-    (async function() {
-        const imageUrl = await fetchRandomPhoto();
-        setBackgroundImage('backgroundElement', imageUrl);
-    })();
+function getRandomImage() {
+    const useUnsplashImage = Math.random() < 0.5; // Adjust the probability of using an Unsplash image (0.5 = 50% chance)
+
+    if (useUnsplashImage) {
+        return fetchRandomPhoto();
+    } else {
+        const randomIndex = Math.floor(Math.random() * localImages.length);
+        return localImages[randomIndex];
+    }
+}
+
+(async function() {
+    const imageUrl = await getRandomImage();
+    setBackgroundImage('backgroundElement', imageUrl);
+})();
 
     /* ----------------------------------------------------------------------
             END Display unsplash background 
