@@ -1,10 +1,16 @@
-    window.onload = async function() {
-    const imageUrl = await getRandomImage();
-    setBackgroundImage('backgroundElement', imageUrl);
-    applyInfoContainerStyles(); // Apply the CSS styles to the infoContainer element
-    init(); // Set the active tab based on the value stored in the localStorage
-    };
+window.onload = async function () {
+  const imageUrl = await getRandomImage();
+  setBackgroundImage("backgroundElement", imageUrl);
+  applyInfoContainerStyles(); // Apply the CSS styles to the infoContainer element
+  init(); // Set the active tab based on the value stored in the localStorage
 
+  document
+    .getElementById("backgroundElement")
+    .addEventListener("mouseover", hideContent);
+  document
+    .getElementById("backgroundElement")
+    .addEventListener("mouseout", showContent);
+};
 
     /* ----------------------------------------------------------------------
         ***     Display unsplash background 
