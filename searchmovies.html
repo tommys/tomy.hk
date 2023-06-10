@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie & TV Show Search</title>
+    <style>
+        .pagination-button {
+            cursor: pointer;
+            padding: 5px 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        .pagination-button:hover {
+            background-color: #ddd;
+        }
+
+        .pagination-button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .result-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .result-image {
+            max-width: 154px;
+            margin-right: 20px;
+        }
+
+        .result-content {
+            flex-grow: 1;
+        }
+
+        .result-title {
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .result-overview {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div><a href="https://tomy.hk/searchmovie.html">Home</a></div>
+
+    <br />
+
+    <input type="text" id="searchInput" placeholder="Search for a movie or TV show">
+    
+    <button id="searchButton">Search</button>
+    <div id="loading" style="display: none;">Loading...</div>
+    <ul id="results"></ul>
+    <div id="pagination"></div>
+
+    <script>
+        document.getElementById('searchButton').addEventListener('click', () => {
+            searchMovieAndTV();
+        });
+
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keydown', handleKeyDown);
+
+        function handleKeyDown(event) {
+            if (event.key === 'Enter') {
+                searchMovieAndTV();
+            }
+        }
+
+        function updateQueryString(page, query) {
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('page', page);
+            currentUrl.searchParams.set('query', query);
+            window.history.pushState({}, '', currentUrl.toString());
+        }
+
+        function getQueryStringParams() {
+            const currentUrl = new URL(window.location.href);
+            const page = parseInt(currentUrl.searchParams.get('page')) || 1;
+            const query = currentUrl.searchParams.get('query') || '';
+            return { page, query };
+        }
+
+
+
+
+
+// async function searchMovieAndTV(page = 1) {
+//     const query = document.getElementById('searchInput').value;
+//     const encodedQuery = encodeURIComponent(query);
+
+//     updateQueryString(page, query); // Update the query string in the URL
+
+//     const apiKey = '4f6a2d4953da33b5743cdab082630241';
+//     const movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodedQuery}&page=${page}&sort_by=popularity.desc`;
+//     const tvUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${encodedQuery}&page=${page}&sort_by=popularity.desc`;
+
+//     showLoading(true);
+
+//     try {
+//         const movieResponse = await fetch(movieUrl);
+//         const movieResult = await movieResponse.json();
+
+//         const tvResponse = await fetch(tvUrl);
+//         const tvResult = await tvResponse.json();
+
+//         const combinedResults = [...movieResult.results, ...tvResult.results];
+//         combinedResults.sort((a, b) => b.popularity - a.popularity); // Sort by popularity in descending order
+//         displayResults(combinedResults, page);
+//         displayPagination(page, movieResult.total_pages);
+//     } catch (error) {
+//         // Handle error
+//         console.error('Error fetching movie/TV data:', error);
+//     } finally {
+//         showLoading(false);
+//     }
+// }
+
+
+async function searchMovieAndTV(page = 1) {
+    const query = document.getElementById('searchInput').value;
+    const encodedQuery = encodeURIComponent(query);
+
+    updateQueryString(page, query); // Update the query string in the URL
+
+    const apiKey = '4f6a2d4953da33b5743cdab082630241';
+    const movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodedQuery}&page=${page}&sort_by=popularity.desc`;
+    const tvUrl = `https://api.themoviedb.org/3/search/tv?api_key=${apiKey}&query=${encodedQuery}&page=${page}&sort_by=popularity.desc`;
+
+    showLoading(true);
+
+    try {
+        const movieResponse = await fetch(movieUrl);
+        const movieResult = await movieResponse.json();
+
+        const tvResponse = await fetch(tvUrl);
+        const tvResult = await tvResponse.json();
+
+        const combinedResults = [...movieResult.results, ...tvResult.results];
+        combinedResults.sort((a, b) => b.popularity - a.popularity); // Sort by popularity in descending order
+
+        // Fetch top billed cast for each result
+    const resultsWithCastPromises = combinedResults.map(async (result) => {
+        const contentType = result.title ? 'movie' : 'tv';
+        const creditsUrl = `https://api.themoviedb.org/3/${contentType}/${result.id}/credits?api_key=${apiKey}`;
+        const creditsResponse = await fetch(creditsUrl);
+        const creditsResult = await creditsResponse.json();
+
+        const topBilledCast = creditsResult.cast.slice(0, 5).map((castMember) => ({
+            name: castMember.name,
+            id: castMember.id
+        }));
+
+        return {
+            ...result,
+            topBilledCast
+        };
+    });
+
+        const resultsWithCast = await Promise.all(resultsWithCastPromises);
+
+        displayResults(resultsWithCast, page);
+        displayPagination(page, movieResult.total_pages);
+    } catch (error) {
+        // Handle error
+        console.error('Error fetching movie/TV data:', error);
+    } finally {
+        showLoading(false);
+    }
+}
+
+
+
+function displayResults(results, currentPage) {
+    const resultItems = results.map((result) => {
+        const title = result.title || result.name;
+        const overview = result.overview || 'No overview available.';
+        const releaseDate = result.release_date || result.first_air_date || 'Unknown';
+        const releaseYear = releaseDate !== 'Unknown' ? new Date(releaseDate).getFullYear() : 'Unknown';
+        const posterPath = result.poster_path ? `https://image.tmdb.org/t/p/w500${result.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Image';
+        const rating = result.vote_average || 'N/A';
+        const contentType = result.title ? 'movie' : 'tv';
+        const contentId = result.id;
+        const contentUrl = `https://www.themoviedb.org/${contentType}/${contentId}`;
+        const topBilledCast = result.topBilledCast.length > 0
+            ? result.topBilledCast.map((castMember) => `<a href="https://www.themoviedb.org/person/${castMember.id}" target="_blank">${castMember.name}</a>`).join(', ')
+            : 'No cast information available.';
+
+        return `
+            <li class="result-item">
+                <a href="${contentUrl}" target="_blank"><img class="result-image" src="${posterPath}" alt="${title} poster"></a>
+                <div class="result-content">
+                    <div class="result-title"><a href="${contentUrl}" target="_blank">${title}</a></div>
+                    <div class="result-release-date">Release Year: ${releaseYear}</div>
+                    <div class="result-rating">Rating: ${rating}</div>
+                    <div class="result-cast">Top Billed Cast: ${topBilledCast}</div>
+                    <div class="result-overview">${overview}</div>
+                </div>
+            </li>
+        `;
+    });
+
+    document.getElementById('results').innerHTML = resultItems.join('');
+}
+
+
+// displayResults for full releaseDate 
+// function displayResults(results, currentPage) {
+//     const resultItems = results.map((result) => {
+//         const title = result.title || result.name;
+//         const overview = result.overview || 'No overview available.';
+//         const releaseDate = result.release_date || result.first_air_date || 'Unknown';
+//         const posterPath = result.poster_path ? `https://image.tmdb.org/t/p/w500${result.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Image';
+//         const rating = result.vote_average || 'N/A';
+//         const contentType = result.title ? 'movie' : 'tv';
+//         const contentId = result.id;
+//         const contentUrl = `https://www.themoviedb.org/${contentType}/${contentId}`;
+//         const topBilledCast = result.topBilledCast.length > 0
+//             ? result.topBilledCast.map((castMember) => `<a href="https://www.themoviedb.org/person/${castMember.id}" target="_blank">${castMember.name}</a>`).join(', ')
+//             : 'No cast information available.';
+
+//         return `
+//             <li class="result-item">
+//                 <img class="result-image" src="${posterPath}" alt="${title} poster">
+//                 <div class="result-content">
+//                     <div class="result-title"><a href="${contentUrl}" target="_blank">${title}</a></div>
+//                     <div class="result-release-date">Release Date: ${releaseDate}</div>
+//                     <div class="result-rating">Rating: ${rating}</div>
+//                     <div class="result-cast">Top Billed Cast: ${topBilledCast}</div>
+//                     <div class="result-overview">${overview}</div>
+//                 </div>
+//             </li>
+//         `;
+//     });
+
+//     document.getElementById('results').innerHTML = resultItems.join('');
+// }
+
+
+
+function displayPagination(currentPage, totalPages) {
+    const pagination = document.getElementById('pagination');
+
+    if (totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+    }
+
+    let buttons = '';
+    const visiblePages = 10;
+    const halfRange = Math.floor(visiblePages / 2);
+    const startPage = Math.max(1, currentPage - halfRange);
+    const endPage = Math.min(totalPages, currentPage + halfRange);
+
+    if (currentPage > 1) {
+        buttons += `<span class="pagination-button" data-page="${currentPage - 1}">&laquo; Prev</span>`;
+    }
+
+    if (startPage > 1) {
+        buttons += `<span class="pagination-button" data-page="1">1</span>`;
+        buttons += '<span class="ellipsis">...</span>';
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        const activeClass = currentPage === i ? 'active' : '';
+        buttons += `<span class="pagination-button ${activeClass}" data-page="${i}">${i}</span>`;
+    }
+
+    if (endPage < totalPages) {
+        buttons += '<span class="ellipsis">...</span>';
+        buttons += `<span class="pagination-button" data-page="${totalPages}">${totalPages}</span>`;
+    }
+
+    if (currentPage < totalPages) {
+        buttons += `<span class="pagination-button" data-page="${currentPage + 1}">Next &raquo;</span>`;
+    }
+
+    pagination.innerHTML = buttons;
+
+    const paginationButtons = document.querySelectorAll('.pagination-button');
+    paginationButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const newPage = parseInt(button.dataset.page);
+            searchMovieAndTV(newPage);
+        });
+    });
+}
+
+        function showLoading(isLoading) {
+            const loading = document.getElementById('loading');
+            if (isLoading) {
+                loading.style.display = 'block';
+            } else {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Initialize search with query and page from the URL
+        const { page, query } = getQueryStringParams();
+        if (query) {
+            searchInput.value = query;
+            searchMovieAndTV(page);
+        }
+    </script>
+</body>
+</html>
