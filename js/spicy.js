@@ -60,20 +60,13 @@
             console.error('Error fetching random photo:', error);
         }
     }
-
     function setBackgroundImage(elementId, imageUrl) {
         const element = document.getElementById(elementId);
-
-        if (imageUrl) {
-            element.style.backgroundImage = `url('${imageUrl}')`;
-        } else {
-            // element.style.backgroundColor = '#000'; // Default background color
-            element.style.backgroundImage = "url('../img/default.jpg')"; // Default background image
-        }
+        element.style.backgroundImage = `url('${imageUrl}')`;
     }
 
     function getRandomImage() {
-        const useUnsplashImage = Math.random() < 0.8; // Adjust the probability of using an Unsplash image (0.2 = 20% chance)
+        const useUnsplashImage = Math.random() < 0.5; // Adjust the probability of using an Unsplash image (0.2 = 20% chance)
 
         if (useUnsplashImage) {
             return fetchRandomPhoto();
