@@ -16,8 +16,8 @@
             }
 
             const data = await response.json();
-            const width = 1920;
-            const height = 1080;
+            const width = 2560;
+            const height = 1440;
             const photoUrl = `${data.urls.raw}&w=${width}&h=${height}`; // Append width and height to the raw image URL
             const name = data.user.name;
             const userProfileUrl = data.user.links.html;
@@ -39,7 +39,7 @@
         const element = document.getElementById(elementId);
         element.style.backgroundImage = `url('${imageUrl}')`;
     }
-    
+
     (async function() {
         const imageUrl = await fetchRandomPhoto();
         setBackgroundImage('backgroundElement', imageUrl);
@@ -48,7 +48,7 @@
     /* ----------------------------------------------------------------------
             END Display unsplash background 
     ---------------------------------------------------------------------- */
-
+ 
 
     /* ----------------------------------------------------------------------
         ***     Hover on/off unsplash background
