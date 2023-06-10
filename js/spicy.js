@@ -68,7 +68,7 @@
             element.style.backgroundImage = `url('${imageUrl}')`;
         } else {
             // element.style.backgroundColor = '#000'; // Default background color
-            element.style.backgroundImage = "url('../img/image1.jpg')"; // Default background image
+            element.style.backgroundImage = "url('../img/default.jpg')"; // Default background image
         }
     }
 
