@@ -1,16 +1,12 @@
-window.onload = async function () {
-  const imageUrl = await getRandomImage();
-  setBackgroundImage("backgroundElement", imageUrl);
-  applyInfoContainerStyles(); // Apply the CSS styles to the infoContainer element
-  init(); // Set the active tab based on the value stored in the localStorage
+function init() {
+  // Get the selected tab from localStorage or default to 'home'
+  var selectedTab = localStorage.getItem("selectedTab") || "home";
+  console.log("Selected tab from localStorage:", selectedTab); // Debugging log
 
-  document
-    .getElementById("backgroundElement")
-    .addEventListener("mouseover", hideContent);
-  document
-    .getElementById("backgroundElement")
-    .addEventListener("mouseout", showContent);
-};
+  // Remove the 'hidden' class from the selected tab and add the 'active' class to the corresponding button
+  document.getElementById(selectedTab).classList.remove("hidden");
+  document.getElementById(`${selectedTab}-tab`).classList.add("active");
+}
 
     /* ----------------------------------------------------------------------
         ***     Display unsplash background 
@@ -151,11 +147,6 @@ window.onload = async function () {
     /* ----------------------------------------------------------------------
         END     Show hide tabs
     ---------------------------------------------------------------------- */
-    function init() {
-        // Get the selected tab from localStorage or default to 'home'
-        var selectedTab = localStorage.getItem('selectedTab') || 'home';
-        showTab(selectedTab);
-    }
 
 
 
