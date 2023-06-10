@@ -1,3 +1,11 @@
+    window.onload = async function() {
+    const imageUrl = await getRandomImage();
+    setBackgroundImage('backgroundElement', imageUrl);
+    applyInfoContainerStyles(); // Apply the CSS styles to the infoContainer element
+    init(); // Set the active tab based on the value stored in the localStorage
+    };
+
+
     /* ----------------------------------------------------------------------
         ***     Display unsplash background 
     ---------------------------------------------------------------------- */
@@ -142,3 +150,7 @@
         var selectedTab = localStorage.getItem('selectedTab') || 'home';
         showTab(selectedTab);
     }
+
+
+
+
