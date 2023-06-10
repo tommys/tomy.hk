@@ -1,12 +1,15 @@
+window.onload = async function () {
+  const imageUrl = await getRandomImage();
+  setBackgroundImage("backgroundElement", imageUrl);
+  init(); // Set the active tab based on the value stored in the localStorage
+};
+
 function init() {
   // Get the selected tab from localStorage or default to 'home'
   var selectedTab = localStorage.getItem("selectedTab") || "home";
-  console.log("Selected tab from localStorage:", selectedTab); // Debugging log
-
-  // Remove the 'hidden' class from the selected tab and add the 'active' class to the corresponding button
-  document.getElementById(selectedTab).classList.remove("hidden");
-  document.getElementById(`${selectedTab}-tab`).classList.add("active");
+  showTab(selectedTab);
 }
+
 
     /* ----------------------------------------------------------------------
         ***     Display unsplash background 
@@ -17,7 +20,8 @@ function init() {
     const localImages = [
     '../img/image1.jpg',
     '../img/image2.jpg',
-    '../img/image3.jpg'
+    '../img/image3.jpg',
+    '../img/image4.jpg',   
     // ... add more image paths
 ];
 
@@ -106,45 +110,24 @@ function init() {
  
 
     /* ----------------------------------------------------------------------
-        ***     Hover on/off unsplash background
-    ---------------------------------------------------------------------- */
-    function showContent() {
-        var backgroundElement = document.getElementById('backgroundElement');
-        for (var i = 0; i < backgroundElement.children.length; i++) {
-            backgroundElement.children[i].style.visibility = 'visible';
-        }
-    }
-
-    function hideContent() {
-        var backgroundElement = document.getElementById('backgroundElement');
-        for (var i = 0; i < backgroundElement.children.length; i++) {
-            backgroundElement.children[i].style.visibility = 'hidden';
-        }
-    }
-    /* ----------------------------------------------------------------------
-            END Hover on/off unsplash background
-    ---------------------------------------------------------------------- */
-
-    /* ----------------------------------------------------------------------
         ***     Show hide tabs
     ---------------------------------------------------------------------- */
-function showTab(tabId) {
-  console.log("Showing tab:", tabId); // Debugging log
+    function showTab(tabId) {
+        var tabs = document.getElementsByClassName('container');
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.add('hidden');
+        }
+        document.getElementById(tabId).classList.remove('hidden');
 
-  let tabContainers = document.getElementsByClassName("container");
-  let tabButtons = document.getElementsByClassName("tab");
+        var tabButtons = document.getElementsByClassName('tab');
+        for (var i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].classList.remove('active');
+        }
+        document.getElementById(tabId + '-tab').classList.add('active');
 
-  for (let i = 0; i < tabContainers.length; i++) {
-    tabContainers[i].classList.add("hidden");
-    tabButtons[i].classList.remove("active");
-  }
-
-  document.getElementById(tabId).classList.remove("hidden");
-  document.getElementById(`${tabId}-tab`).classList.add("active");
-
-  // Save the selected tab to localStorage
-  localStorage.setItem("selectedTab", tabId);
-}
+        // Store the selected tab in localStorage
+        localStorage.setItem('selectedTab', tabId);
+    }
     /* ----------------------------------------------------------------------
         END     Show hide tabs
     ---------------------------------------------------------------------- */
