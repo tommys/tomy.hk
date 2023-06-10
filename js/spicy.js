@@ -128,22 +128,23 @@ function init() {
     /* ----------------------------------------------------------------------
         ***     Show hide tabs
     ---------------------------------------------------------------------- */
-    function showTab(tabId) {
-        var tabs = document.getElementsByClassName('container');
-        for (var i = 0; i < tabs.length; i++) {
-            tabs[i].classList.add('hidden');
-        }
-        document.getElementById(tabId).classList.remove('hidden');
+function showTab(tabId) {
+  console.log("Showing tab:", tabId); // Debugging log
 
-        var tabButtons = document.getElementsByClassName('tab');
-        for (var i = 0; i < tabButtons.length; i++) {
-            tabButtons[i].classList.remove('active');
-        }
-        document.getElementById(tabId + '-tab').classList.add('active');
+  let tabContainers = document.getElementsByClassName("container");
+  let tabButtons = document.getElementsByClassName("tab");
 
-        // Store the selected tab in localStorage
-        localStorage.setItem('selectedTab', tabId);
-    }
+  for (let i = 0; i < tabContainers.length; i++) {
+    tabContainers[i].classList.add("hidden");
+    tabButtons[i].classList.remove("active");
+  }
+
+  document.getElementById(tabId).classList.remove("hidden");
+  document.getElementById(`${tabId}-tab`).classList.add("active");
+
+  // Save the selected tab to localStorage
+  localStorage.setItem("selectedTab", tabId);
+}
     /* ----------------------------------------------------------------------
         END     Show hide tabs
     ---------------------------------------------------------------------- */
