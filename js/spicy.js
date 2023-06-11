@@ -1,15 +1,8 @@
 window.onload = async function () {
   const imageUrl = await getRandomImage();
   setBackgroundImage("backgroundElement", imageUrl);
-  init(); // Set the active tab based on the value stored in the localStorage
+
 };
-
-function init() {
-  // Get the selected tab from localStorage or default to 'home'
-  var selectedTab = localStorage.getItem("selectedTab") || "home";
-  showTab(selectedTab);
-}
-
 
     /* ----------------------------------------------------------------------
         ***     Display unsplash background 
@@ -18,10 +11,10 @@ function init() {
     const collectionId = '8746741'; // Replace with the desired collection ID
 
     const localImages = [
-    '../img/image1.jpg',
-    '../img/image2.jpg',
-    '../img/image3.jpg',
-    '../img/image4.jpg',   
+    './img/image1.jpg',
+    './img/image2.jpg',
+    './img/image3.jpg',
+    './img/image4.jpg',   
     // ... add more image paths
 ];
 
@@ -83,7 +76,7 @@ function init() {
         } else {
           
             // element.style.backgroundColor = '#fff'; // Default background color
-            element.style.backgroundImage = "url('../img/default.jpg')"; // Default background image
+            element.style.backgroundImage = "url('./img/default.jpg')"; // Default background image
         }
     }
 
@@ -109,29 +102,89 @@ function init() {
     ---------------------------------------------------------------------- */
  
 
-    /* ----------------------------------------------------------------------
-        ***     Show hide tabs
-    ---------------------------------------------------------------------- */
-    function showTab(tabId) {
-        var tabs = document.getElementsByClassName('container');
-        for (var i = 0; i < tabs.length; i++) {
-            tabs[i].classList.add('hidden');
-        }
-        document.getElementById(tabId).classList.remove('hidden');
 
-        var tabButtons = document.getElementsByClassName('tab');
-        for (var i = 0; i < tabButtons.length; i++) {
-            tabButtons[i].classList.remove('active');
-        }
-        document.getElementById(tabId + '-tab').classList.add('active');
 
-        // Store the selected tab in localStorage
+
+function showTab(tabId) {
+        const tabs = ['dailyContainer', 'magazineContainer', 'workContainer'];
+        tabs.forEach(id => {
+            const element = document.getElementById(id);
+            element.classList.toggle('hidden', id !== tabId);
+        });
+
         localStorage.setItem('selectedTab', tabId);
+        updateActiveTab(tabId);
     }
-    /* ----------------------------------------------------------------------
-        END     Show hide tabs
-    ---------------------------------------------------------------------- */
+
+    function updateActiveTab(tabId) {
+        const tabButtons = document.querySelectorAll('.tab');
+        tabButtons.forEach(button => {
+            if (button.getAttribute('data-tab') === tabId) {
+                button.classList.add('border-b-2', 'border-blue-500');
+            } else {
+                button.classList.remove('border-b-2', 'border-blue-500');
+            }
+        });
+    }
+
+    function updateDateTime() {
+        const now = new Date();
+        const dateOptions = {
+            weekday: 'long',
+            // year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        };
+        const timeOptions = {
+            hour: '2-digit',
+            minute: '2-digit',
+            // second: '2-digit',
+            hour12: true,
+        };
+        const formattedDate = now.toLocaleDateString('en-GB', dateOptions);
+        const formattedTime = now.toLocaleTimeString('en-GB', timeOptions);
+        document.getElementById('dateContainer').textContent = formattedDate;
+        document.getElementById('timeContainer').textContent = formattedTime;
+    }
 
 
 
+        function updateCounter() {
+            const counterKey = 'refreshCounter';
+            let counter = localStorage.getItem(counterKey);
+
+            if (counter === null) {
+                counter = 0;
+            } else {
+                counter = parseInt(counter, 10);
+            }
+
+            counter += 1;
+            localStorage.setItem(counterKey, counter);
+
+            const counterElement = document.getElementById('counter');
+            counterElement.textContent = `Refresh Count: ${counter}`;
+
+            if (counter >= 1 && counter <= 10) {
+                counterElement.classList.add('color-red');
+            } else if (counter >= 11 && counter <= 70) {
+                counterElement.classList.add('color-green');
+            } else if (counter >= 71 && counter <= 130) {
+                counterElement.classList.add('color-blue');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateCounter);
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    let selectedTab = localStorage.getItem('selectedTab');
+    if (selectedTab === null) {
+        selectedTab = 'dailyContainer';
+    }
+    showTab(selectedTab);
+    updateDateTime();
+});
 

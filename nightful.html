@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet"> -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
     <title>Links Grid</title>
@@ -125,6 +124,9 @@
             font-size: 18px;
         }
 
+        #dailyContainer {
+
+        }
     </style>
 </head>
 
@@ -142,7 +144,7 @@
                     <span class="tab tab3 cursor-pointer px-4 py-2 font-semibold border-b-2 border-transparent" data-tab="workContainer" onclick="showTab('workContainer')">Work</span>
                 </nav>
             </section>
-            <section id="dailyContainer" class="linksContainer dailyuse tab-content grid grid-cols-4 gap-4 hidden">
+            <section id="dailyContainer" class="linksContainer dailyuse tab-content grid grid-cols-4 gap-4 ">
                 <!-- Daily links -->
                 <a class="link google p-4 bg-blue-500 text-white rounded" href="linkgoeshere">Google</a>
                 <a class="link raindrop p-4 bg-green-500 text-white rounded" href="linkgoeshere">Raindrop</a>
@@ -184,12 +186,6 @@
         </div>
     </main>
 <div id="counter"></div>
-
-
-
-
-
-
 
     <script>
     function showTab(tabId) {
@@ -266,11 +262,14 @@
 
 
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const selectedTab = localStorage.getItem('selectedTab') || 'dailyContainer';
-        showTab(selectedTab);
-        updateDateTime();
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    let selectedTab = localStorage.getItem('selectedTab');
+    if (selectedTab === null) {
+        selectedTab = 'dailyContainer';
+    }
+    showTab(selectedTab);
+    updateDateTime();
+});
     </script>
 </body>
 
