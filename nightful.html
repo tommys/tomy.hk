@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet"> -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
     <title>Links Grid</title>
@@ -101,11 +101,36 @@
         #timeContainer {
             text-transform: uppercase;
         }
+
+        #counter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            
+            font-weight: bold;
+        }
+
+
+        .color-red {
+            color: #EF4444;
+            font-size: 12px;
+        }
+
+        .color-green {
+            color: #10B981;
+            font-size: 14px;
+        }
+
+        .color-blue {
+            color: #3B82F6;
+            font-size: 18px;
+        }
+
     </style>
 </head>
 
 <body>
-    <main class="min-h-screen flex items-center justify-center">
+    <main>
         <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
             <section class="text-center font-bold text-xl mb-4">
                 <div id="timeContainer"></div>
@@ -159,6 +184,14 @@
             </section>
         </div>
     </main>
+<div id="counter"></div>
+
+
+
+
+
+
+
     <script>
     function showTab(tabId) {
         const tabs = ['dailyContainer', 'magazineContainer', 'workContainer'];
@@ -201,6 +234,38 @@
         document.getElementById('dateContainer').textContent = formattedDate;
         document.getElementById('timeContainer').textContent = formattedTime;
     }
+
+
+
+        function updateCounter() {
+            const counterKey = 'refreshCounter';
+            let counter = localStorage.getItem(counterKey);
+
+            if (counter === null) {
+                counter = 0;
+            } else {
+                counter = parseInt(counter, 10);
+            }
+
+            counter += 1;
+            localStorage.setItem(counterKey, counter);
+
+            const counterElement = document.getElementById('counter');
+            counterElement.textContent = `Refresh Count: ${counter}`;
+
+            if (counter >= 1 && counter <= 10) {
+                counterElement.classList.add('color-red');
+            } else if (counter >= 11 && counter <= 70) {
+                counterElement.classList.add('color-green');
+            } else if (counter >= 71 && counter <= 130) {
+                counterElement.classList.add('color-blue');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateCounter);
+
+
+
 
     document.addEventListener('DOMContentLoaded', () => {
         const selectedTab = localStorage.getItem('selectedTab') || 'dailyContainer';

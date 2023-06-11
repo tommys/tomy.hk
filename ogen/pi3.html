@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portal</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        }
+
+        h1 {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 40px;
+        color: #333;
+        }
+
+        .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 30px;
+        }
+
+        .tab {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        }
+
+        .tab:hover {
+        background-color: #0056b3;
+        }
+
+        .active {
+        background-color: #0056b3;
+        }
+
+        .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin: 50px;
+        }
+
+.card {
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      border-color: #999;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .card-content {
+      padding: 16px;
+    }
+
+    .card-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .card-description {
+      font-size: 14px;
+    }
+
+
+        .hidden {
+        display: none;
+        }
+        .weather {
+       
+        padding: 10px;
+   
+        font-size: 14px;
+        text-align: right;
+        }
+    </style>
+  <script>
+function showTab(tabId) {
+  var tabs = document.getElementsByClassName('container');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.add('hidden');
+  }
+  document.getElementById(tabId).classList.remove('hidden');
+
+  var tabButtons = document.getElementsByClassName('tab');
+  for (var i = 0; i < tabButtons.length; i++) {
+    tabButtons[i].classList.remove('active');
+  }
+  document.getElementById(tabId + '-tab').classList.add('active');
+
+  // Store the selected tab in localStorage
+  localStorage.setItem('selectedTab', tabId);
+}
+
+
+function init() {
+  // Get the selected tab from localStorage or default to 'home'
+  var selectedTab = localStorage.getItem('selectedTab') || 'home';
+  showTab(selectedTab);
+}
+
+
+
+  function getWeather() {
+    fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=en')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('weather').innerHTML = `
+          <h2>General Situation:</h2>
+          <p>${data.generalSituation}</p>
+          <h2>Outlook:</h2>
+          <p>${data.outlook}</p>
+        `;
+      })
+      .catch(error => console.error('Error fetching weather data:', error));
+  }
+
+
+  </script>
+</head>
+<body onload="init();">
+  <div id="weather" class=""></div>
+
+
+
+
+
+  <h1>My Portal</h1>
+  <div class="tabs">
+    <div id="home-tab" class="tab" onclick="showTab('home')">Home</div>
+    <div id="office-tab" class="tab" onclick="showTab('office')">Office</div>
+  </div>
+
+
+
+  
+  <div id="home" class="container hidden">
+    
+      <a href="https://example.com" class="card">
+    <img src="https://via.placeholder.com/200" alt="Card image">
+    <div class="card-content">
+      <div class="card-title">Card Title</div>
+      <div class="card-description">This is a description of the card.</div>
+    </div>
+  </a>
+
+
+    <a href="https://example.com" class="card">
+    <img src="https://via.placeholder.com/200" alt="Card image">
+    <div class="card-content">
+      <div class="card-title">Card Title</div>
+      <div class="card-description">This is a description of the card.</div>
+    </div>
+  </a>
+
+    <a href="https://example.com" class="card">
+    <img src="https://via.placeholder.com/200" alt="Card image">
+    <div class="card-content">
+      <div class="card-title">Card Title</div>
+      <div class="card-description">This is a description of the card.</div>
+    </div>
+  </a>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Szwsaoyika Logo">
+      <a href="https://szwsaoyika.io/" target="_blank">Szwsaoyika</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Google HK Logo">
+      <a href="https://www.google.com.hk/" target="_blank">Google HK</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Raindrop Logo">
+      <a href="https://app.raindrop.io/" target="_blank">Raindrop</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Facebook Logo">
+      <a href="https://www.facebook.com/" target="_blank">Facebook</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Pinterest Logo">
+      <a href="https://www.pinterest.com/" target="_blank">Pinterest</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Gmail Logo">
+      <a href="https://mail.google.com/mail/u/1/?tab=wm#inbox" target="_blank">Gmail</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Dropbox Logo">
+      <a href="https://www.dropbox.com/home" target="_blank">Dropbox</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Netflix Logo">
+      <a href="https://www.netflix.com/browse" target="_blank">Netflix</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="YouTube Logo">
+      <a href="https://www.youtube.com/" target="_blank">YouTube</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Premier League Logo">
+      <a href="https://www.premierleague.com/" target="_blank">Premier League</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Google Translate Logo">
+      <a href="https://translate.google.com/?source=gtx" target="_blank">Google Translate</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Twitter Logo">
+      <a href="https://twitter.com/" target="_blank">Twitter</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="LinkedIn Logo">
+      <a href="https://www.linkedin.com/" target="_blank">LinkedIn</a>
+    </div>
+
+  </div>
+
+  <div id="office" class="container hidden">
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Jira Logo">
+      <a href="https://elab-aswatson.atlassian.net/jira/dashboards/last-visited" target="_blank">Jira Dashboard</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Confluence Logo">
+      <a href="https://elab-aswatson.atlassian.net/wiki/spaces/AEA/overview" target="_blank">Confluence</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Topdesk Logo">
+      <a href="http://topdesk.aswatson.net/" target="_blank">Topdesk</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Microsoft Office Logo">
+      <a href="https://www.office.com/" target="_blank">Microsoft Office</a>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="MangoApps Logo">
+      <a href="https://aswatson.mangoapps.com/u" target="_blank">MangoApps</a>
+    </div>
+  </div>
+
+
+</body>
+</html>
