@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <title>Links Grid</title>
+    <style>
+        body {
+            background-color: #F1F5F9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        main {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: white;
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 42rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .text-xl {
+            font-size: 1.25rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .tab.border-blue-500 {
+            border-color: #3B82F6;
+        }
+
+        .linksContainer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .link {
+            padding: 1rem;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .bg-blue-500 { background-color: #3B82F6; }
+        .bg-green-500 { background-color: #10B981; }
+        .bg-indigo-500 { background-color: #6366F1; }
+        .bg-red-500 { background-color: #EF4444; }
+        .bg-blue-400 { background-color: #60A5FA; }
+        .bg-red-600 { background-color: #DC2626; }
+        .bg-yellow-400 { background-color: #FBBF24; }
+        .bg-purple-500 { background-color: #8B5CF6; }
+        .bg-green-600 { background-color: #059669; }
+        .bg-gray-500 { background-color: #6B7280; }
+        .bg-gray-400 { background-color: #9CA3AF; }
+        .bg-blue-600 { background-color: #2563EB; }
+        .bg-green-700 { background-color: #047857; }
+        .bg-purple-600 { background-color: #6D28D9; }
+        .bg-gray-800 { background-color: #4B5563; }
+        .bg-indigo-600 { background-color: #4F46E5; }
+        .bg-pink-500 { background-color: #EC4899; }
+
+        #timeContainer {
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="min-h-screen flex items-center justify-center">
+        <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
+            <section class="text-center font-bold text-xl mb-4">
+                <div id="timeContainer"></div>
+                <div id="dateContainer"></div>
+            </section>
+            <section id="tabsContainer" class="mb-4">
+                <nav class="tabs flex justify-center">
+                    <span class="tab tab1 cursor-pointer px-4 py-2 font-semibold border-b-2 border-transparent" data-tab="dailyContainer" onclick="showTab('dailyContainer')">Daily</span>
+                    <span class="tab tab2 cursor-pointer px-4 py-2 font-semibold border-b-2 border-transparent" data-tab="magazineContainer" onclick="showTab('magazineContainer')">Magazine</span>
+                    <span class="tab tab3 cursor-pointer px-4 py-2 font-semibold border-b-2 border-transparent" data-tab="workContainer" onclick="showTab('workContainer')">Work</span>
+                </nav>
+            </section>
+            <section id="dailyContainer" class="linksContainer dailyuse tab-content grid grid-cols-4 gap-4 hidden">
+                <!-- Daily links -->
+                <a class="link google p-4 bg-blue-500 text-white rounded" href="linkgoeshere">Google</a>
+                <a class="link raindrop p-4 bg-green-500 text-white rounded" href="linkgoeshere">Raindrop</a>
+                <a class="link facebook p-4 bg-indigo-500 text-white rounded" href="linkgoeshere">Facebook</a>
+                <a class="link gmail p-4 bg-red-500 text-white rounded" href="linkgoeshere">Gmail</a>
+                <a class="link dropbox p-4 bg-blue-400 text-white rounded" href="linkgoeshere">Dropbox</a>
+                <a class="link netflix p-4 bg-red-600 text-white rounded" href="linkgoeshere">Netflix</a>
+                <a class="link website p-4 bg-yellow-400 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-yellow-400 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-yellow-400 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-yellow-400 text-white rounded" href="linkgoeshere">website</a>
+            </section>
+            <section id="magazineContainer" class="linksContainer magazine tab-content grid grid-cols-4 gap-4 hidden">
+                <!-- Magazine links -->
+                <a class="link news p-4 bg-purple-500 text-white rounded" href="linkgoeshere">News</a>
+                <a class="link twitter p-4 bg-blue-400 text-white rounded" href="linkgoeshere">Twitter</a>
+                <a class="link fotmob p-4 bg-green-600 text-white rounded" href="linkgoeshere">Fotmob</a>
+                <a class="link premier p-4 bg-red-500 text-white rounded" href="linkgoeshere">Premier</a>
+                <a class="link poe p-4 bg-gray-500 text-white rounded" href="linkgoeshere">Poe</a>
+                <a class="link website p-4 bg-gray-400 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-gray-400 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-gray-400 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-gray-400 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-gray-400 text-white rounded" href="linkgoeshere">website</a>
+            </section>
+            <section id="workContainer" class="linksContainer workspace tab-content grid grid-cols-4 gap-4 hidden">
+                <!-- Work links -->
+                <a class="link office p-4 bg-blue-600 text-white rounded" href="linkgoeshere">Office.com</a>
+                <a class="link jira p-4 bg-green-700 text-white rounded" href="linkgoeshere">Jira</a>
+                <a class="link outlook p-4 bg-blue-500 text-white rounded" href="linkgoeshere">Outlook</a>
+                <a class="link Teams p-4 bg-purple-600 text-white rounded" href="linkgoeshere">Teams</a>
+                <a class="link github p-4 bg-gray-800 text-white rounded" href="linkgoeshere">Github</a>
+                <a class="link figma p-4 bg-indigo-600 text-white rounded" href="linkgoeshere">Figma</a>
+                <a class="link website p-4 bg-pink-500 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-pink-500 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-pink-500 text-white rounded" href="linkgoeshere">website</a>
+                <a class="link website p-4 bg-pink-500 text-white rounded" href="linkgoeshere">website</a>
+            </section>
+        </div>
+    </main>
+    <script>
+    function showTab(tabId) {
+        const tabs = ['dailyContainer', 'magazineContainer', 'workContainer'];
+        tabs.forEach(id => {
+            const element = document.getElementById(id);
+            element.classList.toggle('hidden', id !== tabId);
+        });
+
+        localStorage.setItem('selectedTab', tabId);
+        updateActiveTab(tabId);
+    }
+
+    function updateActiveTab(tabId) {
+        const tabButtons = document.querySelectorAll('.tab');
+        tabButtons.forEach(button => {
+            if (button.getAttribute('data-tab') === tabId) {
+                button.classList.add('border-b-2', 'border-blue-500');
+            } else {
+                button.classList.remove('border-b-2', 'border-blue-500');
+            }
+        });
+    }
+
+    function updateDateTime() {
+        const now = new Date();
+        const dateOptions = {
+            weekday: 'long',
+            // year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        };
+        const timeOptions = {
+            hour: '2-digit',
+            minute: '2-digit',
+            // second: '2-digit',
+            hour12: true,
+        };
+        const formattedDate = now.toLocaleDateString('en-GB', dateOptions);
+        const formattedTime = now.toLocaleTimeString('en-GB', timeOptions);
+        document.getElementById('dateContainer').textContent = formattedDate;
+        document.getElementById('timeContainer').textContent = formattedTime;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectedTab = localStorage.getItem('selectedTab') || 'dailyContainer';
+        showTab(selectedTab);
+        updateDateTime();
+    });
+    </script>
+</body>
+
+</html>
