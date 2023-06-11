@@ -15,7 +15,7 @@ window.onload = async function () {
     './img/image2.jpg',
     './img/image3.jpg',
     './img/image4.jpg',   
-    // ... add more image paths
+    // ... add more image
 ];
 
     async function fetchRandomPhoto() {
@@ -81,7 +81,7 @@ window.onload = async function () {
     }
 
     function getRandomImage() {
-        const useUnsplashImage = Math.random() < 0.8; // Adjust the probability of using an Unsplash image (0.2 = 20% chance)
+        const useUnsplashImage = Math.random() < 0.9; // Adjust the probability of using an Unsplash image (0.2 = 20% chance)
 
         if (useUnsplashImage) {
             return fetchRandomPhoto();
@@ -100,9 +100,6 @@ window.onload = async function () {
     /* ----------------------------------------------------------------------
             END Display unsplash background 
     ---------------------------------------------------------------------- */
- 
-
-
 
 
 function showTab(tabId) {
@@ -120,9 +117,9 @@ function showTab(tabId) {
         const tabButtons = document.querySelectorAll('.tab');
         tabButtons.forEach(button => {
             if (button.getAttribute('data-tab') === tabId) {
-                button.classList.add('border-b-2', 'border-blue-500');
+                button.classList.add('active');
             } else {
-                button.classList.remove('border-b-2', 'border-blue-500');
+                button.classList.remove('active');
             }
         });
     }
@@ -163,14 +160,16 @@ function showTab(tabId) {
             localStorage.setItem(counterKey, counter);
 
             const counterElement = document.getElementById('counter');
-            counterElement.textContent = `Refresh Count: ${counter}`;
+            counterElement.textContent = `#${counter}`;
 
             if (counter >= 1 && counter <= 10) {
-                counterElement.classList.add('color-red');
+                counterElement.classList.add('counts', 'counts1');
             } else if (counter >= 11 && counter <= 70) {
-                counterElement.classList.add('color-green');
+                counterElement.classList.add('counts', 'counts2');
             } else if (counter >= 71 && counter <= 130) {
-                counterElement.classList.add('color-blue');
+                counterElement.classList.add('counts', 'counts3');
+            } else if (counter >= 131 && counter <= 300) {
+                counterElement.classList.add('counts', 'counts4');
             }
         }
 
