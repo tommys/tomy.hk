@@ -38,7 +38,7 @@ a {
     width: 100vw;
     height: 100vh;
     min-height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -55,7 +55,7 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     overflow: auto;
@@ -65,7 +65,9 @@ main {
     margin-top: 200px;
 }
 
-
+#container {
+    transition: opacity 0.8s;
+}
 
 /*.container {
     width: 100%;
@@ -124,14 +126,11 @@ section {
     justify-content: center;
 }
 
-
-
-
 .tab {
     background: #ffffff2e;
     color: #fff;
     padding: 10px 20px;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     border-radius: 30px;
     transition: background-color 0.3s ease;
@@ -143,7 +142,7 @@ section {
 }
 
 .active {
-    background: linear-gradient(90deg, #FFB821 0%, #FF5C38 48%, #FF1459 100%);
+    background: linear-gradient(90deg, #FFB821b1 0%, #FF5C38b1 48%, #FF1459b1 100%);
 }
 
 .datetimeContainer {
@@ -155,6 +154,12 @@ section {
 .datetimeContainer div {
     margin: 10px 0;
 }
+
+
+#dailyContainer .link img {
+    width: 30px;
+}
+
 
 .hidden {
     display: none;
@@ -186,10 +191,11 @@ section {
     color: #fff;
     padding: 5px 10px;
     border-radius: 5px 10px;
+    cursor: pointer;
 }
 
 .counts1 {
-    color: #222;
+    color: #fff;
 }
 
 
