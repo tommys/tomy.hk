@@ -1,0 +1,444 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@300&display=swap');
+
+:root {
+    --main-bg-color: linear-gradient(to right top, #2c3e50, #bdc3c7);
+    --body-font: 'Quicksand', sans-serif;
+    --Signika-font: 'Signika', Helvetica, Arial, sans-serif;
+    --Raleway-font: 'Raleway', Helvetica, Arial, sans-serif;
+    --theme-color: #5500AA;
+}
+
+*,
+*::before,
+*::after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    cursor: url('../assets/images/mouse.svg'), auto;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    line-height: 1;
+    overflow: hidden;
+    background: var(--main-bg-color);
+
+}
+
+body {
+    font-family: var(--body-font);
+    font-display: swap;
+    color: #ffffff;
+    background: var(--main-bg-color);
+}
+
+h6 {
+  font-family: "Raleway", Helvetica, Arial, sans-serif;
+  font-size: 312px;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.loadingTopBar {
+    /*background: linear-gradient(90deg, #ffb821 0%, #ff5c38 48%, #ff1459 100%) !important;*/
+    background: linear-gradient(90deg, #ffffff20 0%, #ffffff30 30%, #ffffff40 40%, #ffffff50 50%, #ffffff60 60%, #ffffff70 70%, #ffffff80 80%, #ffffff 100%) !important;
+}
+
+#backgroundElement {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    background: var(--main-bg-color);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 100%;
+    overflow: auto;
+}
+
+.fullscreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#RandomFact {
+    position: absolute;
+    top: 35px;
+    left: 10px;
+    font-family: 'Signika', sans-serif;
+    font-size: 14px;
+    opacity: 0.4;
+    transition: 0.6s;
+    cursor: help;
+}
+
+#RandomText {
+    position: absolute;
+    top: 36px;
+    left: 10px;
+    font-family: 'Signika', sans-serif;
+    font-size: 13px;
+    transition: 0.6s;
+    cursor: help;
+    opacity: 0.5;
+}
+
+#RandomFact:hover, #RandomText:hover { 
+    opacity: 0.9;
+    transition: 0.6s;
+}
+
+#DateTimeDisplay {
+    position: absolute;
+    top: 12px;
+    right: 55px;
+    display: flex;
+    gap: 5px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-family: 'Signika', sans-serif;
+    margin: 0 5px 0 0;
+    opacity: 0.5;
+    z-index: 10;
+}
+
+header #dayPeriod {
+    position: absolute;
+    top: 27px;
+    right: 60px;
+    text-align: right;
+    width: 200px;
+    font-family: 'Signika', sans-serif;
+    font-size: 12px;
+    opacity: 0.5;
+    z-index: 10;
+}
+
+.tabNavigation {
+    position: absolute;
+    top: -55px;
+    display: flex;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.tab {
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: 0.5s ease;
+    text-shadow: 1px 1px 2px #55555550;
+    backdrop-filter: blur(2px) saturate(200%);
+    background-color: #ffffff30;
+    border-bottom: 1px solid rgba(209, 213, 219, 0.1);
+    box-shadow: inset 1px 1px 2px #ffffff10, inset 1px -0.5px 1px #ffffff30, 0 0.6021873017743928px 0.6021873017743928px -1.25px #00000066, 0 2.288533303243457px 2.288533303243457px -2.5px #00000029, 0 10px 10px -3.75px #00000010;
+}
+
+.tab:hover {
+    background: linear-gradient(90deg, #ffb82175 0%, #ff5c3875 48%, #ff145975 100%);
+    transition: 0.5s ease;
+}
+
+.tab.activeTab {
+    background: linear-gradient(90deg, #ffb821aa 0%, #ff5c38aa 48%, #ff1459aa 100%);
+}
+
+.shows-container {
+    position: relative;
+    width: auto;
+    max-width: 1080px;
+    min-width: 1000px;
+    min-height: 380px;
+    backdrop-filter: blur(5px) saturate(160%);
+    background-color: rgba(255, 255, 255, 0.12);
+    border-bottom: 0px solid rgba(209, 213, 219, 0.1);
+    box-shadow: inset 1px 1px 2px #fff9, inset 1px -0.5px 2px #ffffff4d, 0 0.6021873017743928px 0.6021873017743928px -1.25px #0000002e, 0 2.288533303243457px 2.288533303243457px -2.5px #00000029, 0 10px 10px -3.75px #00000010;
+    border-radius: 30px;
+    display: flex;
+    align-items: normal;
+    justify-content: center;
+    padding: 0px;
+    transition: opacity 0.3s ease max-height 0.3s ease;
+}
+
+.shows-container:hover {
+  backdrop-filter: blur(20px) saturate(160%);
+  opacity: 1;
+  transition: 0.25s;
+}
+
+.shows-container.visible {
+    opacity: 1;
+    max-height: 380px;
+}
+.shows-container.hidden {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+
+#SearchBox {
+    position: absolute;
+    top: 200px;
+    background: #ffffff20;
+    font-family: 'Signika', sans-serif;
+    border-radius: 20px;
+    opacity: 0.8;
+    padding: 10px 15px;
+    color: #fff;
+
+    /*
+    backdrop-filter: blur(1px) saturate(160%);
+    background-color: rgba(255, 255, 255, 0.12);
+    border-bottom: 0px solid rgba(209, 213, 219, 0.1);
+    box-shadow: inset 1px 1px 2px #ffffff24, inset 1px -0.5px 1px #ffffff30, 0 0.6021873017743928px 0.6021873017743928px -1.25px #00000066, 0 2.288533303243457px 2.288533303243457px -2.5px #00000029, 0 10px 10px -3.75px #00000010;
+    */
+}
+
+#SearchBox input {
+    width: 260px;
+    border: none;
+    outline: none;
+    background: none;
+    color: #fff;
+    padding: 3px 0;
+
+}
+.input-text-color::placeholder {
+    color: #ffffff90 !important;
+}
+
+#photoDetails {
+    border-radius: 5px 10px;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 11px;
+    text-align: left;
+    text-decoration: none;
+    color: #fff;
+}
+
+#photoDetails a {
+    text-decoration: underline;
+}
+
+.photoDetailsBg {
+    background: #ffffff30;
+    border-radius: 10px 5px;
+    padding: 5px 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+
+#refreshCounter {
+    position: absolute;
+    font-size: 11px;
+    cursor: pointer;
+    right: 5px;
+    bottom: 5px;
+    z-index: 99999;
+    background: #ffffff30;
+    color: #fff;
+    border-radius: 10px 5px;
+    padding: 5px 10px;
+}
+
+#refreshCounter:hover {
+    background: #ffffff10;
+}
+
+
+#hotLinks {
+    position: absolute;
+    bottom: 60px;
+    line-height: 30px;
+    display: none;
+}
+
+.twitterFeed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  gap: 5px;
+  font-family: var(--Raleway-font-font);
+  font-size: 12px;
+  background: linear-gradient(to right, #ffffff20, #1DA1F270);
+  padding: 7px 10px;
+  border-radius: 0px 0px 12px 0px;
+  opacity: 0.5;
+  transition: 0.6s;
+/*  cursor: help;*/
+}
+
+.twitterFeed strong {
+	font-weight: 200;
+}
+
+.twitterFeed svg {
+  width: 14px;
+  fill: #fff !important;
+}
+
+.twitterFeed a { cursor: help; }
+
+.twitterFeed:hover {
+  background: linear-gradient(to right, #ffffff20, #1DA1F260);
+  opacity: 0.9;
+  transition: 0.6s;
+}
+
+.twitterFeed:after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 812px;
+  bottom: 0px;
+  left: 0;
+  background: linear-gradient(to right, #ffffff20, #1DA1F260);
+  transition: 600ms cubic-bezier(.8,0,.2,1);
+  z-index: -1;
+  border-radius: 0px 0px 12px 0px;
+}
+
+.twitterFeed:hover:after {
+  width: 100%;
+  bottom: 0px;
+}
+
+.tabNavigation .google a {
+    position: absolute;
+    top: 0;
+    left: -317px;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 30px;
+    transition: 0.5s ease;
+    text-shadow: 1px 1px 2px #33333360;
+    backdrop-filter: blur(2px) saturate(200%);
+    background: linear-gradient(60deg, #4285F450 10%, #DB443750 48%, #F4B40050 78%, #0F9D5850 100%);
+    border-bottom: 1px solid rgba(209, 213, 219, 0.1);
+    box-shadow: inset 1px 1px 2px #ffffff10, inset 1px -0.5px 1px #ffffff30, 0 0.6021873017743928px 0.6021873017743928px -1.25px #00000066, 0 2.288533303243457px 2.288533303243457px -2.5px #00000029, 0 10px 10px -3.75px #00000010;
+}
+.tabNavigation .google span.g {
+    color: #4285f4;
+}
+.tabNavigation .google span.o {
+    color: #e94234;
+}
+.tabNavigation .google span.oo {
+    color: #f9bb07;
+}
+.tabNavigation .google span.l {
+    color: #34a853;
+}
+.tabNavigation .google span.e {
+    color: #e94234;
+}
+
+.tabNavigation .google a:hover {
+    background: linear-gradient(60deg, #4285F4AA 10%, #DB4437AA 48%, #F4B400AA 78%, #0F9D58AA 100%);
+    transition: 0.5s ease;
+}
+
+
+footer button.thomasdiaryPop {
+    position: absolute;
+    bottom: 5px;
+    right: 45px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    cursor: url('../assets/images/mouse.svg'), auto;
+    color: #fff;
+    transition: 0.2s;
+    border-bottom: 2px solid #ffffff20;
+}
+
+footer button.thomasdiaryPop:hover {
+    border-bottom: 2px solid #ffffff70;
+    transition: 0.2s;
+}
+
+footer button.thomasdiaryPop::after {
+  position: absolute;
+  content: "";
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #ffb821aa 0%, #ff5c38aa 48%, #ff1459aa 100%);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s;
+}
+footer button.thomasdiaryPop:hover {
+  color: #95a5a6;
+}
+footer button.thomasdiaryPop:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.rotatedLabel {
+    border-bottom-width: 1px;
+    border-color: #ffffff60;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-style: solid;
+    border-top-width: 0px;
+    background-color: #ffffff57;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 8px 12px 8px 12px;
+    position: absolute;
+    left: -36px;
+    top: 109px;
+    width: auto;
+    font-size: 13px;
+    text-transform: uppercase;
+    transform: rotate(-90deg);;
+}
+
+

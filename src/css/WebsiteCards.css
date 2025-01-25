@@ -1,0 +1,73 @@
+.cardsContainer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px 20px;
+  padding: 70px 80px;
+  align-items: center;
+  justify-content: center;
+  transition: 0.6s;
+/*  opacity: 0.3;*/
+}
+
+.cardsContainer a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cardsContainer:hover {
+  opacity: 1;
+}
+
+.website-card {
+  background: #ffffff20;
+  padding: 0px;
+  width: 155px;
+  height: 41px;
+  border-radius: 8px;
+}
+
+.website-card .imgbox {
+  background: #fff;
+  width: 40px;
+  height: 41px;
+  border-radius: 8px 0px 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.website-card img {
+  width: 28px;
+}
+
+.website-card p {
+  font-size: 13px;
+}
+
+.website-card:hover {
+  background: #33333340;
+}
+
+/* Each Link Special Customization */
+#Premier\ League {
+  background: #3b2050;
+  color: #fff;
+}
+
+#Premier\ League:hover {
+  filter: saturate(180%)
+}
+
+#Spotify {
+  background: #1db954;
+  color: #fff;
+}
+
+#Spotify:hover {
+  filter: saturate(120%)
+}
+
+#Whatsapp .imgbox {
+  background: #00a884;
+}
