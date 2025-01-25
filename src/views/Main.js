@@ -76,6 +76,7 @@ const Main = () => {
 
   return (
 <main>
+
   <LoadingBar
   className="loadingTopBar"
   height={3}
@@ -104,7 +105,6 @@ const Main = () => {
   <div className={`shows-container ${isContainerVisible ? 'visible' : 'hidden'}`}>
 
 
-    {/*<div className="rotatedLabel">dev</div>*/}
 
     <div className="tabNavigation">
 
