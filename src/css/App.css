@@ -345,41 +345,6 @@ header #dayPeriod {
   bottom: 0px;
 }
 
-.tabNavigation .google a {
-    position: absolute;
-    top: 0;
-    left: -317px;
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 30px;
-    transition: 0.5s ease;
-    text-shadow: 1px 1px 2px #33333360;
-    backdrop-filter: blur(2px) saturate(200%);
-    background: linear-gradient(60deg, #4285F450 10%, #DB443750 48%, #F4B40050 78%, #0F9D5850 100%);
-    border-bottom: 1px solid rgba(209, 213, 219, 0.1);
-    box-shadow: inset 1px 1px 2px #ffffff10, inset 1px -0.5px 1px #ffffff30, 0 0.6021873017743928px 0.6021873017743928px -1.25px #00000066, 0 2.288533303243457px 2.288533303243457px -2.5px #00000029, 0 10px 10px -3.75px #00000010;
-}
-.tabNavigation .google span.g {
-    color: #4285f4;
-}
-.tabNavigation .google span.o {
-    color: #e94234;
-}
-.tabNavigation .google span.oo {
-    color: #f9bb07;
-}
-.tabNavigation .google span.l {
-    color: #34a853;
-}
-.tabNavigation .google span.e {
-    color: #e94234;
-}
-
-.tabNavigation .google a:hover {
-    background: linear-gradient(60deg, #4285F4AA 10%, #DB4437AA 48%, #F4B400AA 78%, #0F9D58AA 100%);
-    transition: 0.5s ease;
-}
 
 
 footer button.thomasdiaryPop {
@@ -421,24 +386,35 @@ footer button.thomasdiaryPop:hover::after {
   transform-origin: left;
 }
 
-.rotatedLabel {
-    border-bottom-width: 1px;
-    border-color: #ffffff60;
-    border-left-width: 0px;
-    border-right-width: 0px;
-    border-style: solid;
-    border-top-width: 0px;
-    background-color: #ffffff57;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    padding: 8px 12px 8px 12px;
+.google {
     position: absolute;
-    left: -36px;
-    top: 109px;
-    width: auto;
-    font-size: 13px;
-    text-transform: uppercase;
-    transform: rotate(-90deg);;
+    top: 55px;
+    left: 10px;
+    font-family: 'Signika', sans-serif;
 }
 
+.google a {
+    font-size: 12px;
+    color: #fff;
+    transition: 0.5s ease;
+    padding: 0 300px 300px 0;
+}
+.google span.g {
+    color: #4285f4;
+}
+.google span.o {
+    color: #e94234;
+}
+.google span.oo {
+    color: #f9bb07;
+}
+.google span.l {
+    color: #34a853;
+}
+.google span.e {
+    color: #e94234;
+}
 
+.google a:hover {
+    transition: 0.5s ease;
+}

@@ -12,14 +12,6 @@ import Dropdown from '../components/Dropdown';
 import Modal from '../components/Modal';
 
 
-
-// import pagesData from '../data/pagesData.json';
-
-
-/* Websites Components */
-import WebsiteCards from '../components/WebsiteCards';
-import { dailyWebsites, magazineWebsites, workWebsites, devWebsites } from '../components/websitesData';
-
 /* Custom Hooks */
 import useLocalStorage from '../hooks/useLocalStorage';
 import useUnsplashImage from '../hooks/useUnsplashImage';
@@ -27,24 +19,22 @@ import useToggleWithLocalStorage from '../hooks/useToggleWithLocalStorage';
 
 const Main = () => {
 
-    //const sheetId = '19Owd_x2-moUk6kQfaNNJJKe6Y8jM9StOI63whGkgOKc'; // Twitter Sheet
-    //  const sheetId = '10tPkRpFQz4Kea9eDz6R_NREn-f5ehh6k0tR1HWqeNEw'; // Spotify Sheet
-
+ 
     const apiKey = process.env.REACT_APP_SHEET_API_KEY;
     const accessKey = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
     const sheetId= process.env.REACT_APP_X_API_KEY;
 
-    const [isContainerVisible, toggleContainerVisibility] = useToggleWithLocalStorage('shows-container', true);
+
     
 
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const toggleModalVisibility = () => {
         setIsModalVisible(!isModalVisible);    
-        toggleContainerVisibility();
+
     };
 
-    const [activeTab, setActiveTab] = useLocalStorage('activeTab', 'dailyContainer');
+    const [activeTab, setActiveTab] = useLocalStorage('activeTab');
 
     const handleTabClick = (tabName) => {
         setActiveTab(tabName);
@@ -96,21 +86,16 @@ const Main = () => {
     <DateTimeDisplay/>
     <DayPeriod />
     <div id="RandomText"><RandomText /></div>
-    <Dropdown isContainerVisible={isContainerVisible} toggleContainerVisibility={toggleContainerVisibility} />        
+    <Dropdown />        
   </header>
     
 
-    {isModalVisible && <Modal toggleModalVisibility={toggleModalVisibility} />}
-
-
-  <div className={`shows-container ${isContainerVisible ? 'visible' : 'hidden'}`}>
 
 
 
-    <div className="tabNavigation">
-
-            <div className="google">
-            <a href="https://www.google.com.hk/" target="_blank" rel="noopener noreferrer">
+    
+           <div className="google">
+            <a href="https://www.google.com.hk/" rel="noopener noreferrer">
                 <span className="g">G</span>
                 <span className="o">o</span>
                 <span className="oo">o</span>
@@ -119,39 +104,6 @@ const Main = () => {
                 <span className="e">e</span>
             </a>
             </div>
-
-        <div className={`tab ${activeTab==='dailyContainer' ? 'activeTab' : '' }`} onClick={()=> handleTabClick('dailyContainer')}>
-            Daily
-        </div>
-        <div className={`tab ${activeTab==='magazineContainer' ? 'activeTab' : '' }`} onClick={()=> handleTabClick('magazineContainer')}>
-            Magazine
-        </div>
-        <div className={`tab ${activeTab==='devWebsites' ? 'activeTab' : '' }`} onClick={()=> handleTabClick('devWebsites')}>
-            Dev
-        </div>
-        <div className={`tab ${activeTab==='workContainer' ? 'activeTab' : '' }`} onClick={()=> handleTabClick('workContainer')}>
-            Work
-        </div>
-    </div>
-
-    <div className={`dailyContainer ${activeTab === 'dailyContainer' ? 'active' : 'hidden'}`}>
-      <WebsiteCards websites={dailyWebsites} />
-    </div>
-
-    <div className={`magazineContainer ${activeTab === 'magazineContainer' ? 'active' : 'hidden'}`}>
-      <WebsiteCards websites={magazineWebsites} />
-    </div>
-
-    <div className={`devWebsites ${activeTab === 'devWebsites' ? 'active' : 'hidden'}`}>
-      <WebsiteCards websites={devWebsites} />
-    </div>
-
-    <div className={`workContainer ${activeTab === 'workContainer' ? 'active' : 'hidden'}`}>
-      <WebsiteCards websites={workWebsites} />
-    </div>
-
-
-
 
     <div id="photoDetails">
       {
@@ -164,14 +116,9 @@ const Main = () => {
       }
     </div>
 
-  </div>
-
-
-
 
   <footer>
     <div id="refreshCounter"><CounterOnRefresh/></div>
-    <button className="thomasdiaryPop" onClick={toggleModalVisibility}>Thomasdiary</button>
   </footer>
 
   </div>
