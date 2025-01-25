@@ -8,8 +8,7 @@ import TagPage from '../components/TagPage';
 import MonthYearPage from '../components/MonthYearPage';
 import AllArticlesPage from '../components/AllArticlesPage';
 import ExploreRedirect from '../components/ExploreRedirect';
-import DriversPage from '../components/DriversPage';
-import CurrentF1CalendarPage from '../components/CurrentF1CalendarPage';
+
 
 const routes = [
   {
@@ -55,14 +54,7 @@ const routes = [
     path: '/explore',
     component: ExploreRedirect,
   },
-{
-    path: '/drivers',
-    component: DriversPage,
-  },
-  {
-    path: '/current',
-    component: CurrentF1CalendarPage,
-  },
+
 ];
 
 export default routes;
