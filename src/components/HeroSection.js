@@ -88,7 +88,7 @@ const HeroSection = () => {
 
         {/* Footer */}
         <div className="hero-footer">
-          <span className="brand">Tomy. Hong Kong</span>
+          <div className="brand">Tomy. Hong Kong 🇭🇰</div>
           <div className="footer-links">
             <a href="#web">Instagram</a>
             <span className="dot">•</span>
