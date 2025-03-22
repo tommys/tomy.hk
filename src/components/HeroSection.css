@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh; /* Changed to min-height to allow for scrolling */
   background-color: #f5f5f5; /* Light background for the outer container */
   padding: 0 20px;
 }
@@ -60,15 +60,6 @@
   font-weight: 300;
   letter-spacing: 1px;
   opacity: 0.8;
-}
-
-
-.tagline-left {
-  text-align: left;
-}
-
-.tagline-right {
-  text-align: right;
 }
 
 /* Main Content */
@@ -153,12 +144,8 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-background {
-    max-width: 380px;
+    max-width: 350px;
     height: 85vh;
-  }
-
-  .hero-container {
-    padding: 0 10px;
   }
 
   .hero-content h1 {
@@ -182,18 +169,19 @@
   .tagline-right {
     font-size: 0.9rem;
   }
+
+  .tagline-container {
+    flex-direction: column; /* Stack tagline parts vertically on smaller screens */
+    align-items: flex-start;
+    gap: 10px;
+  }
 }
 
 @media (max-width: 480px) {
   .hero-background {
-    max-width: 380px;
+    max-width: 300px;
     height: 80vh;
   }
-
-  .hero-container {
-    padding: 0 10px;
-  }
-
 
   .hero-content h1 {
     font-size: 1.5rem;

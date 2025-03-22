@@ -24,6 +24,14 @@ const HeroSection = () => {
     setCurrentBackground(randomIndex);
   }, []); // Empty dependency array ensures this runs only on mount (page load)
 
+  // Preload images to avoid flickering
+  useEffect(() => {
+    backgroundImages.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+  }, []);
+
   return (
     <div className="hero-container">
       <div className="hero-background">
@@ -75,15 +83,7 @@ const HeroSection = () => {
           >
             From nothing to everything, let’s bring your vision to life.
           </motion.p>
-          <motion.button
-            className="cta-button"
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            transition={{ delay: 0.8 }}
-          >
-            Coming Soon...
-          </motion.button>
+      
         </div>
 
         {/* Footer */}
