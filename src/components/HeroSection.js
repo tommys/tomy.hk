@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 import './HeroSection.css';
 
-// List of background images
-const backgroundImages = [
-  'https://images.unsplash.com/photo-1742226111230-1f7620e64851?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1742226111627-260d93f0cdb3?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://images.unsplash.com/photo-1633084069286-4abad35d62d2?q=80&w=3142&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-];
+// Default image to display while loading (replace with a local image in public/assets)
+const DEFAULT_IMAGE = '/assets/default-background.png';
 
 const HeroSection = () => {
-  const [currentBackground, setCurrentBackground] = useState(0);
+  const [currentBackground, setCurrentBackground] = useState(DEFAULT_IMAGE);
+  const [nextBackground, setNextBackground] = useState(null);
+  const [isFading, setIsFading] = useState(false);
+  const [photographer, setPhotographer] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Animation variants for the elements
   const fadeInUp = {
@@ -18,28 +20,99 @@ const HeroSection = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
-  // Select a random background image on page load
+  // Fetch a random image from the Unsplash API
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-    setCurrentBackground(randomIndex);
+    const fetchRandomImage = async () => {
+      setLoading(true);
+      setError(null);
+
+      // Check if an image URL is cached in localStorage
+      const cachedImage = localStorage.getItem('backgroundImage');
+      const cachedPhotographer = localStorage.getItem('photographer');
+
+      if (cachedImage && cachedPhotographer) {
+        setCurrentBackground(cachedImage);
+        setPhotographer(JSON.parse(cachedPhotographer));
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const collectionId = '81RGUV5W_Uo'; // Your collection ID
+        const accessKey = 'zikSa5Ka2d33qS003MNK67aQqUCHBdryctUEHrM_W0k'; // Your access key
+        const response = await axios.get('https://api.unsplash.com/photos/random', {
+          params: {
+            collections: collectionId,
+            client_id: accessKey,
+          },
+        });
+
+        // Preload the image before setting it
+        const imageUrl = response.data.urls.regular;
+        const img = new Image();
+        img.src = imageUrl;
+        img.onload = () => {
+          setIsFading(true);
+          setNextBackground(imageUrl);
+          setPhotographer({
+            name: response.data.user.name,
+            username: response.data.user.username,
+            profileUrl: response.data.user.links.html,
+          });
+
+          // Cache the image URL and photographer details in localStorage
+          localStorage.setItem('backgroundImage', imageUrl);
+          localStorage.setItem('photographer', JSON.stringify({
+            name: response.data.user.name,
+            username: response.data.user.username,
+            profileUrl: response.data.user.links.html,
+          }));
+        };
+        img.onerror = () => {
+          throw new Error('Failed to load image');
+        };
+      } catch (err) {
+        setError('Failed to fetch background image. Using default background.');
+        setCurrentBackground(DEFAULT_IMAGE);
+        setPhotographer(null);
+        localStorage.removeItem('backgroundImage');
+        localStorage.removeItem('photographer');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRandomImage();
   }, []); // Empty dependency array ensures this runs only on mount (page load)
 
-  // Preload images to avoid flickering
-  useEffect(() => {
-    backgroundImages.forEach((image) => {
-      const img = new Image();
-      img.src = image;
-    });
-  }, []);
+  // Handle fade transition completion
+  const handleFadeComplete = () => {
+    setCurrentBackground(nextBackground);
+    setNextBackground(null);
+    setIsFading(false);
+  };
 
   return (
     <div className="hero-container">
       <div className="hero-background">
         {/* Current Background */}
-        <div
-          className="background-layer"
-          style={{ backgroundImage: `url(${backgroundImages[currentBackground]})` }}
-        />
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : (
+          <>
+            <div
+              className="background-layer"
+              style={{ backgroundImage: `url(${currentBackground})`, opacity: isFading ? 0 : 1 }}
+            />
+            {nextBackground && (
+              <div
+                className="background-layer"
+                style={{ backgroundImage: `url(${nextBackground})`, opacity: isFading ? 1 : 0 }}
+                onTransitionEnd={handleFadeComplete}
+              />
+            )}
+          </>
+        )}
         {/* Gradient Overlay */}
         <div className="gradient-overlay" />
 
@@ -83,18 +156,33 @@ const HeroSection = () => {
           >
             From nothing to everything, let’s bring your vision to life.
           </motion.p>
-      
         </div>
 
-        {/* Footer */}
+        {/* Footer with Photographer Credit */}
         <div className="hero-footer">
-          <div className="brand">Tomy. Hong Kong 🇭🇰</div>
-          <div className="footer-links">
+          <div className="brand footer-links">
+            Tomy. Hong Kong <span>🇭🇰</span> / 
             <a href="#web">Instagram</a>
             <span className="dot">•</span>
             <a href="#product">Threads</a>
             <span className="dot">•</span>
             <a href="#brand">X.com</a>
+          </div>
+          <div className="footer-links">
+            {photographer && (
+              <>
+                <span className="photographer-credit">
+                  Photo by{' '}
+                  <a href={`${photographer.profileUrl}?utm_source=tomy_hk&utm_medium=referral`} target="_blank" rel="noopener noreferrer">
+                    {photographer.name}
+                  </a>{' '}
+                  on{' '}
+                  <a href="https://unsplash.com?utm_source=tomy_hk&utm_medium=referral" target="_blank" rel="noopener noreferrer">
+                    Unsplash
+                  </a>
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>
