@@ -39,7 +39,7 @@ const HeroSection = () => {
 
       try {
         const collectionId = '81RGUV5W_Uo'; // Your collection ID
-        const accessKey = 'zikSa5Ka2d33qS003MNK67aQqUCHBdryctUEHrM_W0k'; // Your access key
+        const accessKey = process.env.REACT_APP_UNSPLASH_ACCESS_KEY; // Use environment variable
         const response = await axios.get('https://api.unsplash.com/photos/random', {
           params: {
             collections: collectionId,
