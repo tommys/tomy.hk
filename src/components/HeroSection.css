@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* Changed to min-height to allow for scrolling */
-  background-color: #f5f5f5; /* Light background for the outer container */
+  background-color: #e8e8e8; /* Light background for the outer container */
   padding: 0 20px;
 }
 
