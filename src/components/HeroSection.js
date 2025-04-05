@@ -26,16 +26,9 @@ const HeroSection = () => {
       setLoading(true);
       setError(null);
 
-      // Check if an image URL is cached in localStorage
-      const cachedImage = localStorage.getItem('backgroundImage');
-      const cachedPhotographer = localStorage.getItem('photographer');
-
-      if (cachedImage && cachedPhotographer) {
-        setCurrentBackground(cachedImage);
-        setPhotographer(JSON.parse(cachedPhotographer));
-        setLoading(false);
-        return;
-      }
+      // Clear cache on every page load
+      localStorage.removeItem('backgroundImage');
+      localStorage.removeItem('photographer');
 
       try {
         const collectionId = '81RGUV5W_Uo'; // Your collection ID
