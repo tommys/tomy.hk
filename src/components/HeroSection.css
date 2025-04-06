@@ -3,22 +3,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Changed to min-height to allow for scrolling */
-  background-color: #e8e8e8; /* Light background for the outer container */
+  min-height: 100vh; /* 改為 min-height 以允許滾動 */
+  background-color: #e8e8e8; /* 外層容器的淺色背景 */
   padding: 0 20px;
 }
 
 .hero-background {
   position: relative;
   width: 100%;
-  max-width: 1400px; /* Adjust based on your design */
-  height: 90vh; /* Slightly less than full height for a card-like effect */
+  max-width: 1400px; /* 根據您的設計調整 */
+  height: 90vh; /* 略小於全高，呈現卡片效果 */
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Background Layer */
+/* 背景層 */
 .background-layer {
   position: absolute;
   top: 0;
@@ -27,20 +27,21 @@
   height: 100%;
   background-size: cover;
   background-position: center;
+  transition: opacity 0.5s ease; /* 添加淡入淡出過渡 */
 }
 
-/* Gradient Overlay */
+/* 漸層覆蓋 */
 .gradient-overlay {
   position: absolute;
   bottom: 0;
   top: 0;
   width: 100%;
-  height: 100%; /* Adjust the height of the gradient */
+  height: 100%; /* 調整漸層高度 */
   background: linear-gradient(to bottom, rgba(0, 0, 0, 1), transparent);
   pointer-events: none;
 }
 
-/* Tagline Container */
+/* 標語容器 */
 .tagline-container {
   position: absolute;
   top: 20px;
@@ -49,10 +50,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1; /* Ensure text is above background layers */
+  z-index: 1; /* 確保文字在背景層之上 */
 }
 
-/* Tagline Left and Right */
+/* 標語左右部分 */
 .tagline-left,
 .tagline-right {
   color: #fff;
@@ -62,15 +63,15 @@
   opacity: 0.8;
 }
 
-/* Main Content */
+/* 主要內容 */
 .hero-content {
   position: absolute;
-  bottom: 100px; /* Adjust based on your design */
+  bottom: 100px; /* 根據您的設計調整 */
   left: 20px;
   right: 20px;
   color: #fff;
   text-align: left;
-  z-index: 1; /* Ensure content is above background layers */
+  z-index: 1; /* 確保內容在背景層之上 */
 }
 
 .hero-content h1 {
@@ -87,9 +88,9 @@
   opacity: 0.9;
 }
 
-/* Call-to-Action Button */
+/* 行動呼籲按鈕（未在 JSX 中使用，但保留樣式） */
 .cta-button {
-  background-color: #00000061; /* Button color from the image */
+  background-color: #00000061; /* 按鈕顏色 */
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -104,7 +105,7 @@
   background-color: #00000093;
 }
 
-/* Footer */
+/* 頁腳 */
 .hero-footer {
   position: absolute;
   bottom: 20px;
@@ -116,7 +117,7 @@
   color: #fff;
   font-size: 0.9rem;
   font-weight: 300;
-  z-index: 1; /* Ensure footer is above background layers */
+  z-index: 1; /* 確保頁腳在背景層之上 */
 }
 
 .footer-links {
@@ -141,7 +142,7 @@
   opacity: 0.7;
 }
 
-/* Responsive Design */
+/* 響應式設計 */
 @media (max-width: 768px) {
   .hero-background {
     max-width: 350px;
@@ -171,7 +172,7 @@
   }
 
   .tagline-container {
-    flex-direction: column; /* Stack tagline parts vertically on smaller screens */
+    flex-direction: column; /* 小螢幕上垂直堆疊標語 */
     align-items: flex-start;
     gap: 10px;
   }
@@ -197,8 +198,7 @@
   }
 }
 
-
-/* Loading State */
+/* 載入狀態 */
 .loading {
   position: absolute;
   top: 50%;
@@ -210,9 +210,7 @@
   z-index: 1;
 }
 
-
-
-/* Photographer Credit */
+/* 攝影師署名 */
 .photographer-credit {
   font-size: 0.9rem;
   font-weight: 300;
@@ -229,23 +227,10 @@
   opacity: 1;
 }
 
-/* Adjust footer links spacing for the credit */
+/* 調整頁腳連結間距 */
 .footer-links {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap; /* Allow wrapping if the content is too long */
+  flex-wrap: wrap; /* 若內容過長允許換行 */
 }
-
-/* Background Layer */
-.background-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  transition: opacity 0.5s ease; /* Add fade transition */
-}
-

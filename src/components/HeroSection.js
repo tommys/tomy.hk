@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import './HeroSection.css';
 
-// Default image to display while loading (replace with a local image in public/assets)
+// 預設背景圖片（請替換為您本地 public/assets 中的圖片路徑）
 const DEFAULT_IMAGE = '/assets/default-background.png';
 
 const HeroSection = () => {
@@ -14,34 +14,36 @@ const HeroSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Animation variants for the elements
+  // 動畫變體
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
-  // Fetch a random image from the Unsplash API
+  // 從 Unsplash API 獲取隨機圖片
   useEffect(() => {
     const fetchRandomImage = async () => {
       setLoading(true);
       setError(null);
 
-      // Clear cache on every page load
+      // 清除緩存
       localStorage.removeItem('backgroundImage');
       localStorage.removeItem('photographer');
 
       try {
-        const collectionId = '81RGUV5W_Uo'; // Your collection ID
-        const accessKey = process.env.REACT_APP_UNSPLASH_ACCESS_KEY; // Use environment variable
+        const collectionId = '81RGUV5W_Uo'; // 您的收藏 ID
+        const accessKey = process.env.REACT_APP_UNSPLASH_ACCESS_KEY; // 環境變數
         const response = await axios.get('https://api.unsplash.com/photos/random', {
           params: {
             collections: collectionId,
             client_id: accessKey,
+            w: 1920, // 自定義寬度 1920px
+            q: 85,   // 自定義質量 85（範圍 0-100）
           },
         });
 
-        // Preload the image before setting it
-        const imageUrl = response.data.urls.regular;
+        // 使用 full 尺寸（最高質量）
+        const imageUrl = response.data.urls.full;
         const img = new Image();
         img.src = imageUrl;
         img.onload = () => {
@@ -53,7 +55,7 @@ const HeroSection = () => {
             profileUrl: response.data.user.links.html,
           });
 
-          // Cache the image URL and photographer details in localStorage
+          // 緩存圖片 URL 和攝影師資訊
           localStorage.setItem('backgroundImage', imageUrl);
           localStorage.setItem('photographer', JSON.stringify({
             name: response.data.user.name,
@@ -62,10 +64,10 @@ const HeroSection = () => {
           }));
         };
         img.onerror = () => {
-          throw new Error('Failed to load image');
+          throw new Error('無法載入圖片');
         };
       } catch (err) {
-        setError('Failed to fetch background image. Using default background.');
+        setError('無法獲取背景圖片，將使用預設背景。');
         setCurrentBackground(DEFAULT_IMAGE);
         setPhotographer(null);
         localStorage.removeItem('backgroundImage');
@@ -76,9 +78,9 @@ const HeroSection = () => {
     };
 
     fetchRandomImage();
-  }, []); // Empty dependency array ensures this runs only on mount (page load)
+  }, []); // 僅在組件掛載時運行
 
-  // Handle fade transition completion
+  // 處理淡入淡出完成
   const handleFadeComplete = () => {
     setCurrentBackground(nextBackground);
     setNextBackground(null);
@@ -88,9 +90,9 @@ const HeroSection = () => {
   return (
     <div className="hero-container">
       <div className="hero-background">
-        {/* Current Background */}
+        {/* 當前背景 */}
         {loading ? (
-          <div className="loading">Loading...</div>
+          <div className="loading">載入中...</div>
         ) : (
           <>
             <div
@@ -106,10 +108,10 @@ const HeroSection = () => {
             )}
           </>
         )}
-        {/* Gradient Overlay */}
+        {/* 漸層覆蓋 */}
         <div className="gradient-overlay" />
 
-        {/* Tagline Container with Left and Right Divs */}
+        {/* 標語容器 */}
         <div className="tagline-container">
           <motion.p
             className="tagline-left"
@@ -127,11 +129,11 @@ const HeroSection = () => {
             variants={fadeInUp}
             transition={{ delay: 0.2 }}
           >
-            Crafting Seamless Digital Experiences.
+            打造無縫數位體驗。
           </motion.p>
         </div>
 
-        {/* Main Content with animation */}
+        {/* 主要內容 */}
         <div className="hero-content">
           <motion.h1
             initial="hidden"
@@ -139,7 +141,7 @@ const HeroSection = () => {
             variants={fadeInUp}
             transition={{ delay: 0.4 }}
           >
-            Create your digital reality.
+            創造您的數位現實。
           </motion.h1>
           <motion.p
             initial="hidden"
@@ -147,11 +149,11 @@ const HeroSection = () => {
             variants={fadeInUp}
             transition={{ delay: 0.6 }}
           >
-            From nothing to everything, let’s bring your vision to life.
+            從無到有，讓我們將您的願景變為現實。
           </motion.p>
         </div>
 
-        {/* Footer with Photographer Credit */}
+        {/* 頁腳與攝影師署名 */}
         <div className="hero-footer">
           <div className="brand footer-links">
             Tomy. Hong Kong <span>🇭🇰</span> / 
@@ -165,11 +167,11 @@ const HeroSection = () => {
             {photographer && (
               <>
                 <span className="photographer-credit">
-                  Photo by{' '}
+                  照片由{' '}
                   <a href={`${photographer.profileUrl}?utm_source=tomy_hk&utm_medium=referral`} target="_blank" rel="noopener noreferrer">
                     {photographer.name}
                   </a>{' '}
-                  on{' '}
+                  提供於{' '}
                   <a href="https://unsplash.com?utm_source=tomy_hk&utm_medium=referral" target="_blank" rel="noopener noreferrer">
                     Unsplash
                   </a>
