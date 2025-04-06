@@ -4,15 +4,15 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* 改為 min-height 以允許滾動 */
-  background-color: #e8e8e8; /* 外層容器的淺色背景 */
+  background-color: #dadada; /* 外層容器的淺色背景 */
   padding: 0 20px;
 }
 
 .hero-background {
   position: relative;
   width: 100%;
-  max-width: 1400px; /* 根據您的設計調整 */
-  height: 90vh; /* 略小於全高，呈現卡片效果 */
+  max-width: 1360px; /* 根據您的設計調整 */
+  height: 75vh; /* 略小於全高，呈現卡片效果 */
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);

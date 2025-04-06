@@ -37,8 +37,8 @@ const HeroSection = () => {
           params: {
             collections: collectionId,
             client_id: accessKey,
-            w: 1920, // Custom width 1920px
-            q: 85,   // Custom quality 85 (range 0-100)
+            w: 2560, // Custom width 1920px / 2560px
+            q: 100,   // Custom quality 85 (range 0-100)
           },
         });
 
@@ -157,11 +157,11 @@ const HeroSection = () => {
         <div className="hero-footer">
           <div className="brand footer-links">
             Tomy. Hong Kong <span>🇭🇰</span> / 
-            <a href="#web">Instagram</a>
+            <a href="https://www.instagram.com/icedmilkteahk/" target="_blank">Instagram</a>
             <span className="dot">•</span>
-            <a href="#product">Threads</a>
+            <a href="https://www.threads.net/@icedmilkteahk" target="_blank">Threads</a>
             <span className="dot">•</span>
-            <a href="#brand">X.com</a>
+            <a href="https://x.com/tommyswf" target="_blank">X.com</a>
           </div>
           <div className="footer-links">
             {photographer && (
