@@ -7,88 +7,111 @@ import './HeroSection.css';
 const DEFAULT_IMAGE = '/assets/default-background.png';
 
 const HeroSection = () => {
-  const [currentBackground, setCurrentBackground] = useState(DEFAULT_IMAGE);
-  const [nextBackground, setNextBackground] = useState(null);
-  const [isFading, setIsFading] = useState(false);
-  const [photographer, setPhotographer] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const [currentBackground, setCurrentBackground] = useState(DEFAULT_IMAGE);
+    const [nextBackground, setNextBackground] = useState(null);
+    const [isFading, setIsFading] = useState(false);
+    const [photographer, setPhotographer] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [showPhotographerDetails, setShowPhotographerDetails] = useState(false);
 
-  // Animation variants for the elements
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-  };
-
-  // Fetch a random image from the Unsplash API
-  useEffect(() => {
-    const fetchRandomImage = async () => {
-      setLoading(true);
-      setError(null);
-
-      // Clear cache on every page load
-      localStorage.removeItem('backgroundImage');
-      localStorage.removeItem('photographer');
-
-      try {
-        const collectionId = '81RGUV5W_Uo'; // Your collection ID
-        const accessKey = process.env.REACT_APP_UNSPLASH_ACCESS_KEY; // Use environment variable
-        const response = await axios.get('https://api.unsplash.com/photos/random', {
-          params: {
-            collections: collectionId,
-            client_id: accessKey,
-            w: 2560, // Custom width 1920px / 2560px
-            q: 100,   // Custom quality 85 (range 0-100)
-          },
-        });
-
-        // Use full size (highest quality) instead of regular
-        const imageUrl = response.data.urls.full;
-        const img = new Image();
-        img.src = imageUrl;
-        img.onload = () => {
-          setIsFading(true);
-          setNextBackground(imageUrl);
-          setPhotographer({
-            name: response.data.user.name,
-            username: response.data.user.username,
-            profileUrl: response.data.user.links.html,
-          });
-
-          // Cache the image URL and photographer details in localStorage
-          localStorage.setItem('backgroundImage', imageUrl);
-          localStorage.setItem('photographer', JSON.stringify({
-            name: response.data.user.name,
-            username: response.data.user.username,
-            profileUrl: response.data.user.links.html,
-          }));
-        };
-        img.onerror = () => {
-          throw new Error('Failed to load image');
-        };
-      } catch (err) {
-        setError('Failed to fetch background image. Using default background.');
-        setCurrentBackground(DEFAULT_IMAGE);
-        setPhotographer(null);
-        localStorage.removeItem('backgroundImage');
-        localStorage.removeItem('photographer');
-      } finally {
-        setLoading(false);
-      }
+    // Animation variants for the elements
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
     };
 
-    fetchRandomImage();
-  }, []); // Empty dependency array ensures this runs only on mount (page load)
+    // Fetch a random image from the Unsplash API
+    useEffect(() => {
+        const fetchRandomImage = async () => {
+            setLoading(true);
+            setError(null);
 
-  // Handle fade transition completion
-  const handleFadeComplete = () => {
-    setCurrentBackground(nextBackground);
-    setNextBackground(null);
-    setIsFading(false);
-  };
+            // Clear cache on every page load
+            localStorage.removeItem('backgroundImage');
+            localStorage.removeItem('photographer');
 
-  return (
-    <div className="hero-container">
+            try {
+                const collectionId = '81RGUV5W_Uo'; // Your collection ID
+                const accessKey = process.env.REACT_APP_UNSPLASH_ACCESS_KEY; // Use environment variable
+                const response = await axios.get('https://api.unsplash.com/photos/random', {
+                    params: {
+                        collections: collectionId,
+                        client_id: accessKey,
+                        w: 2560, // Custom width 1920px / 2560px
+                        q: 100, // Custom quality 85 (range 0-100)
+                    },
+                });
+
+                // Use full size (highest quality) instead of regular
+                const imageUrl = response.data.urls.full;
+                const img = new Image();
+                img.src = imageUrl;
+                img.onload = () => {
+                    setIsFading(true);
+                    setNextBackground(imageUrl);
+                    setPhotographer({
+                        name: response.data.user.name,
+                        username: response.data.user.username,
+                        profileUrl: response.data.user.links.html,
+                    });
+
+                    // Cache the image URL and photographer details in localStorage
+                    localStorage.setItem('backgroundImage', imageUrl);
+                    localStorage.setItem('photographer', JSON.stringify({
+                        name: response.data.user.name,
+                        username: response.data.user.username,
+                        profileUrl: response.data.user.links.html,
+                    }));
+                };
+                img.onerror = () => {
+                    throw new Error('Failed to load image');
+                };
+            } catch (err) {
+                setError('Failed to fetch background image. Using default background.');
+                setCurrentBackground(DEFAULT_IMAGE);
+                setPhotographer(null);
+                localStorage.removeItem('backgroundImage');
+                localStorage.removeItem('photographer');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRandomImage();
+    }, []); // Empty dependency array ensures this runs only on mount (page load)
+
+    // Handle fade transition completion
+    const handleFadeComplete = () => {
+        setCurrentBackground(nextBackground);
+        setNextBackground(null);
+        setIsFading(false);
+    };
+
+
+    // Add this with other state hooks
+    const quotes = [
+        "Simplicity is the ultimate sophistication. – Leonardo da Vinci",
+        "Code is like humor. When you have to explain it, it’s bad. – Cory House",
+        "Design is not just what it looks like and feels like. Design is how it works. – Steve Jobs",
+        "Stay hungry, stay foolish. – Steve Jobs",
+        "The best way to predict the future is to invent it. – Alan Kay",
+    ];
+
+    const [dailyQuote, setDailyQuote] = useState("");
+
+    useEffect(() => {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        setDailyQuote(quotes[randomIndex]);
+    }, []);
+
+
+
+
+
+
+    return (
+        <div className="hero-container">
       <div className="hero-background">
         {/* Current Background */}
         {loading ? (
@@ -135,6 +158,17 @@ const HeroSection = () => {
 
         {/* Main Content with animation */}
         <div className="hero-content">
+
+          <motion.p
+            className="daily-quote"
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            transition={{ delay: 0.8 }}
+          >
+          {dailyQuote}
+          </motion.p>
+
           <motion.h1
             initial="hidden"
             animate="visible"
@@ -182,7 +216,7 @@ const HeroSection = () => {
         </div>
       </div>
     </div>
-  );
+    );
 };
 
 export default HeroSection;
